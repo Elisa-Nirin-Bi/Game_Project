@@ -1,4 +1,4 @@
-class Obstacle {
+class secondObstacle {
   constructor (game, x, y) {
     this.game = game;
     this.x = x;
@@ -13,9 +13,9 @@ class Obstacle {
   paint () {
     const context = this.game.context;
     
-    const obstacleImg = new Image();
-    obstacleImg.src = './images/box.png';
-    context.drawImage(obstacleImg, 
+    const secondObstacleImg = new Image();
+    secondObstacleImg.src = './images/obstacle2.png';
+    context.drawImage(secondObstacleImg, 
       this.x - this.width / 2 + 100,
       350,
       this.width,
