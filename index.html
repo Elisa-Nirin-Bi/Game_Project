@@ -7,11 +7,20 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
- 
-    <div class="game" id="canvas_page" > <canvas id="canvas" width="800" height="450"></canvas></div>
+    <div class="game" id="intro_page"> 
+    <img src="./images/arrows.png" alt="" class="arrows-img" width="200px" />
+    <button id="start_button">StartGame</button>
+      
+    </div>
+   
+   <div class="game" id="canvas_page" style="display: none;"> <canvas id="canvas" width="800" height="450"></canvas></div>
+   <div class="game" id="game_over_page" style="display: none;">
+  <h3>Game over!</h3>
+  <button id="game_over_button">Play Again</button>
+  </div>
    <script src="player.js"></script>
    <script src="obstacle.js"></script>
-   <script src="secondObstacle.js"></script>
+   <script src="puddle.js"></script>
    <script src="peasant.js"></script>
    <script src="background.js"></script>
    <script src="game.js"></script>

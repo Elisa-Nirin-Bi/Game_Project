@@ -1,3 +1,4 @@
+
 class Obstacle {
   constructor (game, x, y) {
     this.game = game;

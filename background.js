@@ -28,5 +28,13 @@ class Background {
       context.drawImage(level, -outset, 0, width, height);
       context.drawImage(level, -outset + width, 0, width, height);
     }
+    context.fillStyle = "#231709";
+    context.fillRect(
+      0,
+      this.game.canvas.height - this.game.groundHeight,
+      1000,
+      this.game.groundHeight
+    );
   }
 }
+
