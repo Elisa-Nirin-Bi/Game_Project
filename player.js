@@ -1,5 +1,5 @@
 const playerImg = new Image();
-playerImg.src = './images/woman-idle.gif';
+playerImg.src = './images/oldman-idle-1.png';
 
 const gravity = 0.2;
 
@@ -8,8 +8,8 @@ class Player {
     this.game = game;
     this.x = x;
     this.y = y;
-    this.width = 50;
-    this.height = 50;
+    this.width = 150;
+    this.height = 100;
     this.score = score;
     this.speedX = 0;
     this.speedY = 0;
@@ -17,13 +17,12 @@ class Player {
 
   runLogic() {
     this.score = 100;
-
-    // Calculate boundaries
+     // Calculate boundaries
     const lowerBoundary =
       this.game.canvas.height - this.height - this.game.groundHeight;
     const leftBoundary = 0;
     const rightBoundary = this.game.canvas.width - this.width;
-    const topBoundary = 200;
+    const topBoundary = 100;
     
 
     // Moving the player vertically

@@ -5,9 +5,11 @@ class Game {
     this.background = new Background(this);
     this.puddle = new Puddle(this);
     this.groundHeight = 50;
+    this.started = false
   }
 
   start() {
+    this.started = true;
     this.score = 100;
     this.movePlayer();
     this.player = new Player(this, 50, 100, 100);
@@ -75,18 +77,18 @@ class Game {
   
   hitObstacle () {
     const player = this.player;
-    const obstacle = this.obstacle;
     for (const obstacle of this.obstacles)  {
+      
       if (
           player.x < obstacle.x + obstacle.width  &&
-          player.x + player.width > obstacle.x  &&
-          player.y < obstacle.y + obstacle.height  &&
-          player.y + player.height  > obstacle.y
+          player.x + player.width > obstacle.x 
+      
       ) {
         /*const audioHitObstacle = new Audio("./sound/clap-fat.wav");
         audioHitObstacle.play();*/
         this.score -= 10;
-        console.log("hit")
+        this.started = false;
+        console.log(player.x)
       }
     }
   }
@@ -125,6 +127,19 @@ class Game {
           break;
         case 'Space':
           this.player.jump();
+      }
+      this.context.clearRect(0, 0, 800, 500);
+    });
+    
+    window.addEventListener('keyup', (event) => {
+      const key = event.code;
+      switch (key) {
+        case 'ArrowRight':
+          this.player.speedX += 0;
+          break;
+        case 'ArrowLeft':
+          this.player.speedX = 0;
+          break;
       }
       this.context.clearRect(0, 0, 800, 500);
     });

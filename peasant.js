@@ -1,20 +1,15 @@
-const peasantImg = new Image();
-peasantImg.src ="./images/oldman-idle-1.png"
+const coinImg = new Image();
+coinImg.src ="./images/coin.png"
 
-const peasantHatManImg = new Image();
-peasantHatManImg.src ="./images/hat-man-idle-1.png";
-
-const peasantBeardedImg = new Image();
-peasantBeardedImg.src ="./images/bearded-idle-1.png"
 
 class Peasant {
    constructor (game, x, y) {
     this.game = game;
     this.x = x;
     this.y = y;
-    this.width = 50;
-    this.height = 50;
-    this.img = [peasantImg, peasantHatManImg, peasantBeardedImg][Math.floor(Math.random()*3)];
+    this.width = 20;
+    this.height = 20;
+    this.img = coinImg;
   }
 
   runLogic () {
