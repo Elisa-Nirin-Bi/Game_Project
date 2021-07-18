@@ -5,9 +5,11 @@ class Puddle {
     this.y = y;
     this.width = 50;
     this.height = 50;
+    
   }
 
  runLogic(){
+ 
  }
 
   paint () {

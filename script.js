@@ -15,3 +15,10 @@ startBtn.addEventListener('click', () => {
   game.start();
 });
 
+
+  /*if(this.game.player.score === 0)  {
+    const gameOver = document.getElementById('game_over_page');
+    canvasPage.style.display = "none";
+    gameOver.style.display = "block";
+    console.log("end")
+  }*/

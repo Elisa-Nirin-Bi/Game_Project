@@ -10,7 +10,7 @@ class Game {
   start() {
     this.score = 100;
     this.movePlayer();
-    this.player = new Player(this, 100, 100, 100);
+    this.player = new Player(this, 50, 100, 100);
     this.peasants = [];
     this.obstacles = [];
     this.addObstacle();
@@ -18,7 +18,11 @@ class Game {
     this.paint();
     this.loop();
   }
-
+  rainPeasant(){
+  for (const peasant of this.peasants) {
+   peasant.paint();
+  }}
+   
   fontDefinition() {
     this.context.font = '22px sans-serif';
     this.context.fillStyle = '#ADD8E6';
@@ -34,15 +38,14 @@ class Game {
   }
 
   addObstacle() {
-    const obstacleX = Math.random() * this.canvas.width;
+    const obstacleX = Math.floor(Math.random() * this.canvas.width);
     const obstacleY = 350;
-    if (obstacleX && this.obstacles.length <= 3) {
+    if (obstacleX && this.obstacles.length <= 1) {
       const obstacle = new Obstacle(this, obstacleX, obstacleY);
-      this.obstacles.push(obstacle);
+      this.obstacles.push(obstacle);}
+      console.log(this.obstacles.length)
     }
-  }
-
-  
+     
   addPeasant() {
     this.context.save();
     const peasantX = Math.random() * this.canvas.width;
@@ -51,7 +54,7 @@ class Game {
     this.peasants.push(peasant);
     this.context.restore();
   }
-  checkCollisionBetweenPlayerAndEnemies () {
+  grabPeasant () {
     const player = this.player;
     this.peasants.forEach((peasant, index) => {
       if (
@@ -59,16 +62,48 @@ class Game {
           player.x + player.width > peasant.x &&
           player.y < peasant.y + peasant.height &&
           player.y + player.height > peasant.y
-           // collision detected!
        
       ) {
+        /*const audioHitPeasant = new Audio("./sound/hihat-808.wav");
+        audioHitPeasant.play();*/
         this.peasants.splice(index, 1);
         this.score -= 10;
-        console.log("ciao")
+        
       }
     });
   }
-    
+  
+  hitObstacle () {
+    const player = this.player;
+    const obstacle = this.obstacle;
+    for (const obstacle of this.obstacles)  {
+      if (
+          player.x < obstacle.x + obstacle.width  &&
+          player.x + player.width > obstacle.x  &&
+          player.y < obstacle.y + obstacle.height  &&
+          player.y + player.height  > obstacle.y
+      ) {
+        /*const audioHitObstacle = new Audio("./sound/clap-fat.wav");
+        audioHitObstacle.play();*/
+        this.score -= 10;
+        console.log("hit")
+      }
+    }
+  }
+  reduceSpeedBeforeObstacle(){
+     if(this.player.x < this.obstacleBoundary) {
+       this.player.speedX = 0;
+       console.log("stop")
+     }
+    }
+  
+  reduceSpeedOnPuddle(){
+      const puddleBoundary = 800 - this.puddle.width;
+       if(this.player.x < this.puddleBoundary){
+        this.player.speedX = 0;
+        console.log("stopPuddle")
+       }
+     } 
   
   loop() {
     window.requestAnimationFrame(() => {
@@ -102,23 +137,21 @@ class Game {
       }
     });
   }
-
+  
   resetCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   runLogic() {
     this.player.runLogic();
-
-    if (Math.random() < 0.02) {
-      this.addObstacle();
-    }
-
+    this.hitObstacle();
+    if (Math.random() < 0.01) {
+      this.addObstacle();}
+    
     for (const obstacle of this.obstacles) {
       this.x - this.width / 2 + 200;
       obstacle.runLogic();
-    }
-
+    
     if (Math.random() < 0.03) {
       this.addPeasant();
     }
@@ -126,9 +159,12 @@ class Game {
     for (const peasant of this.peasants) {
       peasant.runLogic();
     }
-    this.checkCollisionBetweenPlayerAndEnemies();
+   
+    this.reduceSpeedBeforeObstacle();
+    this.reduceSpeedOnPuddle();
+    this.grabPeasant();  
     this.removePeasants();
-  }
+  }}
 
   paint() {
     this.resetCanvas();
@@ -139,11 +175,13 @@ class Game {
     for (const obstacle of this.obstacles) {
       obstacle.paint();
     }
-    this.player.paint();
-    for (const peasant of this.peasants) {
+ 
+    /*for (const peasant of this.peasants) {
       peasant.paint();
-    }
+    }*/
+    setTimeout(this.rainPeasant(), 6000)
     
     this.showScore();
   }
 }
+

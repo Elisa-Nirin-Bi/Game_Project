@@ -23,6 +23,8 @@ class Player {
       this.game.canvas.height - this.height - this.game.groundHeight;
     const leftBoundary = 0;
     const rightBoundary = this.game.canvas.width - this.width;
+    const topBoundary = 200;
+    
 
     // Moving the player vertically
     this.speedY += gravity;
@@ -31,6 +33,11 @@ class Player {
     // Ensure player doesn't go out of boundary
     if (this.y > lowerBoundary) {
       this.y = lowerBoundary;
+      this.speedY = 0;
+    }
+    
+    if (this.y < topBoundary) {
+      this.y = topBoundary;
       this.speedY = 0;
     }
     
@@ -50,13 +57,14 @@ class Player {
 
     // Reducing speed of x
     this.speedX /= 1.05;
+
   }
 
   jump() {
-    this.speedY -= 5;
+    this.speedY -= 10;
     console.log(this.speedY);
   }
-
+ 
   paint() {
     const context = this.game.context;
     context.drawImage(
