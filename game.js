@@ -104,8 +104,8 @@ class Game {
         player.y < peasant.y + peasant.height &&
         player.y + player.height > peasant.y
       ) {
-        const audioHitPeasant = new Audio("./sound/hihat-808.wav");
-        audioHitPeasant.play();
+        /*const audioHitPeasant = new Audio("./sound/hihat-808.wav");
+        audioHitPeasant.play();*/
         this.peasants.splice(index, 1);
         this.score += 10;
       }
