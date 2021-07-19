@@ -71,11 +71,9 @@ class Game {
     }*/
 
   addObstacle() {
-    const obstacle = new Obstacle(this, 130, 100);
-    const obstacleOne = new Obstacle(this, 350, 100);
-    const obstacleTwo = new Obstacle(this, 500, 100);
+    const obstacle = new Obstacle(this, 150, 100);
+    const obstacleTwo = new Obstacle(this, 430, 100);
     this.obstacles.push(obstacle);
-    this.obstacles.push(obstacleOne);
     this.obstacles.push(obstacleTwo);
   }
 
@@ -101,7 +99,6 @@ class Game {
     const player = this.player;
     this.peasants.forEach((peasant, index) => {
       if (
-      
         /*player.x < peasant.x + peasant.width &&
         player.x + player.width > peasant.x &&*/
         player.y < peasant.y + peasant.height &&
@@ -131,55 +128,27 @@ class Game {
       }
     });
   }
-  /*hitObstacle () {
-    
-    for(const obstacle of this.obstacles){
-      const player = this.player;
-   
-    if (
-      player.x > obstacle.x && player.x < obstacle.x +50){
-
-       
-        /*const audioHitObstacle = new Audio("./sound/clap-fat.wav");
-        audioHitObstacle.play();
-        this.score -= 10,
-        this.started = false,
-        console.log(player.x),
-        console.log(obstacle.x)
-      }}}*/
-
-  /*reduceSpeedBeforeObstacle(){
-     if(this.player.x > 200) {
-       this.player.speedX -= 1;
-       console.log(this.player.x)
-       console.log("stopPuddle")
-     }
-     
-    }*/
-
+  
   hitObstacle() {
     if (
-      (this.player.x > 90 && this.player.x < 100 && this.player.y === 300) ||
-      (this.player.x > 330 && this.player.x < 300 && this.player.y === 300) ||
-      (this.player.x > 440 && this.player.x < 450 && this.player.y === 300)
+      (this.player.x > 110 && this.player.x < 120 && this.player.y === 300) ||
+      (this.player.x > 370 && this.player.x < 380 && this.player.y === 300)
     ) {
       this.player.speedX -= 2;
-      console.log('hjtiizk');
     }
   }
 
   stepOnPuddle() {
     if (
-      (this.player.x > 240 && this.player.x < 270 && this.player.y === 300) ||
-      (this.player.x > 640 && this.player.x < 670 && this.player.y === 300)
+      (this.player.x > 280 && this.player.x < 310 && this.player.y === 300) ||
+      (this.player.x > 580 && this.player.x < 610 && this.player.y === 300)
     ) {
       this.started = false;
       this.gameOver.style.display = 'block';
       this.playGame.style.display = 'none';
     }
   }
-  
-  
+   
   loop() {
     this.runLogic();
     this.paint();
@@ -195,10 +164,10 @@ class Game {
       const key = event.code;
       switch (key) {
         case 'ArrowRight':
-          this.player.speedX += 3;
+          this.player.speedX += 2;
           break;
         case 'ArrowLeft':
-          this.player.speedX -= 3;
+          this.player.speedX -= 2;
           break;
         case 'Space':
           this.player.jump();
@@ -210,7 +179,7 @@ class Game {
       const key = event.code;
       switch (key) {
         case 'ArrowRight':
-          this.player.speedX += 2;
+          this.player.speedX = 0;
           break;
         case 'ArrowLeft':
           this.player.speedX = 0;
