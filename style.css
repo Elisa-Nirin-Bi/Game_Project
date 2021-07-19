@@ -1,5 +1,6 @@
 *{
   background-color: #231709;
+  font-family: 'Yomogi', cursive;
 }
 
 .game{
@@ -8,18 +9,46 @@
 }
 
 canvas{
-  border: 5px solid #A06152;
+  border: 5px solid #FFA500;
 }
+
+#game_text{
+  color: #FFA500;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
 
 #intro_page{
 display:flex;
 flex-direction: column;
 align-items: center;
+margin-top: 50px;
 }
 
 #intro_page > button {
   width: 100px;
   height: 40px;
   border-radius: 5px;
-  background-color: #EFBAE9;
+  background-color: #FFA500;
+  margin-top: 30px;
+  font-size: 15px;
+}
+
+h3{
+  color: #FFA500;
+  font-size:25px ;
+}
+
+h2{
+  color: #FFA500;
+  font-size:40px ;
+}
+
+
+#game_over_page > button{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
 }

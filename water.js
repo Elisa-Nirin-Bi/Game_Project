@@ -1,15 +1,15 @@
-const beerImg = new Image();
-beerImg.src ="./images/beer.png"
+const waterImg = new Image();
+waterImg.src ="./images/water.png"
 
 
-class Peasant {
+class Water {
    constructor (game, x, y) {
     this.game = game;
     this.x = x;
     this.y = y;
     this.width = 30;
     this.height = 30;
-    this.img = beerImg;
+    this.img = waterImg;
   }
 
   runLogic () {

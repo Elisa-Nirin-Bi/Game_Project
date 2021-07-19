@@ -1,19 +1,27 @@
 const canvasElement = document.querySelector('canvas');
 
- const context = canvasElement.getContext('2d');
+
+const startGame = document.getElementById('intro_page');
+const playGame = document.getElementById('canvas_page');
+const gameOverGame = document.getElementById('game_over_page');
+
 
 const game = new Game(canvasElement);
-const intro = document.getElementById('intro_page');
-const canvasPage = document.getElementById('canvas_page');
-
-
 
 const startBtn = document.getElementById('start_button');
 startBtn.addEventListener('click', () => {
-  intro.style.display = "none";
-  canvasPage.style.display = "block";
+  startGame.style.display = "none";
+  playGame.style.display = "block";
   game.start();
 });
+
+const playAgainBtn = document.getElementById('game_over_button');
+playAgainBtn.addEventListener('click', () => {
+  playGame.style.display = "block";
+  gameOverGame.style.display = "none";
+  game.start();
+});
+
 
 
   /*if(this.game.player.score === 0)  {

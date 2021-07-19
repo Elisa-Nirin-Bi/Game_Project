@@ -1,53 +1,84 @@
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
+    this.gameOver = document.getElementById('game_over_page');
+    this.playGame = document.getElementById('canvas_page');
+    this.winGame = document.getElementById('win_page');
     this.context = canvas.getContext('2d');
     this.background = new Background(this);
     this.puddle = new Puddle(this);
     this.groundHeight = 50;
-    this.started = false
+    this.started = false;
+  }
+
+  displayPage() {
+    if (this.score <= 0) {
+      this.started = false;
+      this.gameOver.style.display = 'block';
+      this.playGame.style.display = 'none';
+    }
   }
 
   start() {
     this.started = true;
-    this.score = 100;
+    this.score = 50;
     this.movePlayer();
     this.player = new Player(this, 50, 100, 100);
     this.peasants = [];
     this.obstacles = [];
+    this.waters = [];
     this.addObstacle();
     this.addPeasant();
+    this.addWater();
     this.paint();
     this.loop();
   }
-  rainPeasant(){
-  for (const peasant of this.peasants) {
-   peasant.paint();
-  }}
-   
+
+  rainPeasant() {
+    for (const peasant of this.peasants) {
+      peasant.paint();
+    }
+  }
+  rainWater() {
+    for (const water of this.waters) {
+      water.paint();
+    }
+  }
+
   fontDefinition() {
     this.context.font = '22px sans-serif';
-    this.context.fillStyle = '#ADD8E6';
-    this.context.fillText(`${this.score}`, 710, 70);
+    this.context.fillStyle = '#FFA500';
+    this.context.fillText(`${this.score}`, 670, 70);
   }
 
   showScore() {
     this.context.beginPath();
-    this.context.arc(730, 63, 25, 0, 2 * Math.PI);
+    this.context.beginPath();
+    this.context.rect(630, 43, 100, 40);
+    this.context.stroke();
     this.context.fillStyle = '#231709';
     this.context.fill();
     this.fontDefinition();
   }
 
-  addObstacle() {
+  /*addObstacle() {
     const obstacleX = Math.floor(Math.random() * this.canvas.width);
     const obstacleY = 350;
-    if (obstacleX && this.obstacles.length <= 1) {
+    if (this.obstacles.length <= 1) {
       const obstacle = new Obstacle(this, obstacleX, obstacleY);
       this.obstacles.push(obstacle);}
-      console.log(this.obstacles.length)
-    }
-     
+      console.log(this.player.y)
+    }*/
+
+  addObstacle() {
+    const obstacle = new Obstacle(this, 130, 100);
+    const obstacleOne = new Obstacle(this, 350, 100);
+    const obstacleTwo = new Obstacle(this, 500, 100);
+    this.obstacles.push(obstacle);
+    this.obstacles.push(obstacleOne);
+    this.obstacles.push(obstacleTwo);
+  }
+
   addPeasant() {
     this.context.save();
     const peasantX = Math.random() * this.canvas.width;
@@ -56,63 +87,107 @@ class Game {
     this.peasants.push(peasant);
     this.context.restore();
   }
-  grabPeasant () {
+  
+  addWater() {
+    this.context.save();
+    const waterX = Math.random() * this.canvas.width;
+    const waterY = 150;
+    const water = new Water(this, waterX, waterY);
+    this.waters.push(water);
+    this.context.restore();
+  }
+
+  grabPeasant() {
     const player = this.player;
     this.peasants.forEach((peasant, index) => {
       if (
-          player.x < peasant.x + peasant.width &&
-          player.x + player.width > peasant.x &&
-          player.y < peasant.y + peasant.height &&
-          player.y + player.height > peasant.y
-       
+      
+        /*player.x < peasant.x + peasant.width &&
+        player.x + player.width > peasant.x &&*/
+        player.y < peasant.y + peasant.height &&
+        player.y + player.height > peasant.y
       ) {
-        /*const audioHitPeasant = new Audio("./sound/hihat-808.wav");
-        audioHitPeasant.play();*/
+        const audioHitPeasant = new Audio("./sound/hihat-808.wav");
+        audioHitPeasant.play();
         this.peasants.splice(index, 1);
-        this.score -= 10;
-        
+        this.score += 10;
       }
     });
   }
-  
-  hitObstacle () {
+
+  grabWater() {
     const player = this.player;
-    for (const obstacle of this.obstacles)  {
-      
+    this.waters.forEach((water, index) => {
       if (
-          player.x < obstacle.x + obstacle.width  &&
-          player.x + player.width > obstacle.x 
-      
+       /* player.x < water.x + water.width &&
+        player.x + player.width > water.x &&*/
+        player.y < water.y + water.height &&
+        player.y + player.height > water.y
       ) {
-        /*const audioHitObstacle = new Audio("./sound/clap-fat.wav");
-        audioHitObstacle.play();*/
+        
+        this.waters.splice(index, 1);
         this.score -= 10;
-        this.started = false;
-        console.log(player.x)
+        console.log("go on")
       }
+    });
+  }
+  /*hitObstacle () {
+    
+    for(const obstacle of this.obstacles){
+      const player = this.player;
+   
+    if (
+      player.x > obstacle.x && player.x < obstacle.x +50){
+
+       
+        /*const audioHitObstacle = new Audio("./sound/clap-fat.wav");
+        audioHitObstacle.play();
+        this.score -= 10,
+        this.started = false,
+        console.log(player.x),
+        console.log(obstacle.x)
+      }}}*/
+
+  /*reduceSpeedBeforeObstacle(){
+     if(this.player.x > 200) {
+       this.player.speedX -= 1;
+       console.log(this.player.x)
+       console.log("stopPuddle")
+     }
+     
+    }*/
+
+  hitObstacle() {
+    if (
+      (this.player.x > 90 && this.player.x < 100 && this.player.y === 300) ||
+      (this.player.x > 330 && this.player.x < 300 && this.player.y === 300) ||
+      (this.player.x > 440 && this.player.x < 450 && this.player.y === 300)
+    ) {
+      this.player.speedX -= 2;
+      console.log('hjtiizk');
     }
   }
-  reduceSpeedBeforeObstacle(){
-     if(this.player.x < this.obstacleBoundary) {
-       this.player.speedX = 0;
-       console.log("stop")
-     }
+
+  stepOnPuddle() {
+    if (
+      (this.player.x > 240 && this.player.x < 270 && this.player.y === 300) ||
+      (this.player.x > 640 && this.player.x < 670 && this.player.y === 300)
+    ) {
+      this.started = false;
+      this.gameOver.style.display = 'block';
+      this.playGame.style.display = 'none';
     }
+  }
   
-  reduceSpeedOnPuddle(){
-      const puddleBoundary = 800 - this.puddle.width;
-       if(this.player.x < this.puddleBoundary){
-        this.player.speedX = 0;
-        console.log("stopPuddle")
-       }
-     } 
   
   loop() {
-    window.requestAnimationFrame(() => {
-      this.runLogic();
-      this.paint();
-      this.loop();
-    });
+    this.runLogic();
+    this.paint();
+    if (this.started) {
+      window.requestAnimationFrame(() => {
+        this.loop();
+      });
+    }
   }
 
   movePlayer() {
@@ -130,12 +205,12 @@ class Game {
       }
       this.context.clearRect(0, 0, 800, 500);
     });
-    
+
     window.addEventListener('keyup', (event) => {
       const key = event.code;
       switch (key) {
         case 'ArrowRight':
-          this.player.speedX += 0;
+          this.player.speedX += 2;
           break;
         case 'ArrowLeft':
           this.player.speedX = 0;
@@ -153,33 +228,51 @@ class Game {
     });
   }
   
+  removeWater() {
+    this.waters.forEach((waters, i) => {
+      if (waters.y > this.canvas.height - 40) {
+        this.waters.splice(i, 1);
+      }
+    });
+  }
+
   resetCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   runLogic() {
     this.player.runLogic();
-    this.hitObstacle();
-    if (Math.random() < 0.01) {
+    /*if (Math.random() < 0.01) {
       this.addObstacle();}
     
     for (const obstacle of this.obstacles) {
       this.x - this.width / 2 + 200;
-      obstacle.runLogic();
-    
+      obstacle.runLogic();}*/
+
     if (Math.random() < 0.03) {
       this.addPeasant();
     }
-
+    
+    if (Math.random() < 0.03) {
+      this.addWater();
+    }
     for (const peasant of this.peasants) {
       peasant.runLogic();
     }
-   
-    this.reduceSpeedBeforeObstacle();
-    this.reduceSpeedOnPuddle();
-    this.grabPeasant();  
+    for (const water of this.waters) {
+      water.runLogic();
+    }
+
+    this.stepOnPuddle();
+    //this.reduceSpeedBeforeObstacle();
+    this.hitObstacle();
+    this.grabPeasant();
+    this.grabWater();
     this.removePeasants();
-  }}
+    this.removeWater();
+ 
+    this.displayPage();
+  }
 
   paint() {
     this.resetCanvas();
@@ -190,13 +283,17 @@ class Game {
     for (const obstacle of this.obstacles) {
       obstacle.paint();
     }
- 
-    /*for (const peasant of this.peasants) {
+
+    for (const peasant of this.peasants) {
       peasant.paint();
-    }*/
-    setTimeout(this.rainPeasant(), 6000)
+    }
     
+    for (const water of this.waters) {
+      water.paint();
+    }
+    //setTimeout(this.rainPeasant(), 6000)
+    this.rainPeasant();
+    this.rainWater();
     this.showScore();
   }
 }
-

@@ -13,15 +13,17 @@ class Player {
     this.score = score;
     this.speedX = 0;
     this.speedY = 0;
+  
   }
 
+  
   runLogic() {
     this.score = 100;
      // Calculate boundaries
     const lowerBoundary =
       this.game.canvas.height - this.height - this.game.groundHeight;
     const leftBoundary = 0;
-    const rightBoundary = this.game.canvas.width - this.width;
+    const rightBoundary = this.game.canvas.width - 50;
     const topBoundary = 100;
     
 
@@ -56,11 +58,17 @@ class Player {
 
     // Reducing speed of x
     this.speedX /= 1.05;
+    
+    //Player steps on puddles
+    /*if(this.x > 350 && this.x < 400){
+     this.gameOver();
+     console.log("love love love all you need is love")
+     }*/
 
   }
 
   jump() {
-    this.speedY -= 10;
+    this.speedY -= 5;
     console.log(this.speedY);
   }
  
