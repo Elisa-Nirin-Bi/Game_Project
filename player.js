@@ -15,6 +15,7 @@ class Player {
     this.speedY = 0;
   
   }
+
   
  runLogic() {
     this.score = 100;

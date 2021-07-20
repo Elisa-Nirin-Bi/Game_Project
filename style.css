@@ -40,15 +40,14 @@ h3{
   font-size:25px ;
 }
 
-h2{
-  color: #FFA500;
-  font-size:40px ;
-}
-
-
 #game_over_page > button{
   width: 100px;
   height: 40px;
   border-radius: 5px;
   background-color: #FFA500;
+}
+
+#win_page { 
+  color: #FFA500;
+  font-size:40px ;
 }

@@ -21,7 +21,7 @@ class Game {
 
   start() {
     this.started = true;
-    this.score = 50;
+    this.score = 20;
     this.movePlayer();
     this.player = new Player(this, 50, 100, 100);
     this.peasants = [];
@@ -72,7 +72,7 @@ class Game {
 
   addObstacle() {
     const obstacle = new Obstacle(this, 150, 100);
-    const obstacleTwo = new Obstacle(this, 430, 100);
+    const obstacleTwo = new Obstacle(this, 450, 100);
     this.obstacles.push(obstacle);
     this.obstacles.push(obstacleTwo);
   }
@@ -99,8 +99,8 @@ class Game {
     const player = this.player;
     this.peasants.forEach((peasant, index) => {
       if (
-        /*player.x < peasant.x + peasant.width &&
-        player.x + player.width > peasant.x &&*/
+        player.x < peasant.x + peasant.width &&
+        player.x + player.width > peasant.x &&
         player.y < peasant.y + peasant.height &&
         player.y + player.height > peasant.y
       ) {
@@ -108,6 +108,7 @@ class Game {
         audioHitPeasant.play();*/
         this.peasants.splice(index, 1);
         this.score += 10;
+        console.log("beer")
       }
     });
   }
@@ -116,15 +117,15 @@ class Game {
     const player = this.player;
     this.waters.forEach((water, index) => {
       if (
-       /* player.x < water.x + water.width &&
-        player.x + player.width > water.x &&*/
+        player.x < water.x + water.width &&
+        player.x + player.width > water.x &&
         player.y < water.y + water.height &&
         player.y + player.height > water.y
       ) {
         
         this.waters.splice(index, 1);
         this.score -= 10;
-        console.log("go on")
+        console.log("water")
       }
     });
   }
@@ -132,26 +133,23 @@ class Game {
   hitObstacle() {
     if (
       (this.player.x > 110 && this.player.x < 120 && this.player.y === 300) ||
-      (this.player.x > 370 && this.player.x < 380 && this.player.y === 300)
+      (this.player.x > 410 && this.player.x < 420 && this.player.y === 300)
     ) {
-      this.player.speedX -= 2;
+      this.player.speedX -= 5;
     }
   }
 
   stepOnPuddle() {
-    if (
-      (this.player.x > 280 && this.player.x < 310 && this.player.y === 300) ||
-      (this.player.x > 580 && this.player.x < 610 && this.player.y === 300)
-    ) {
+    if (this.player.x > 280 && this.player.x < 310 && this.player.y === 300 ||
+      this.player.x > 580 && this.player.x < 610 && this.player.y === 300){
       this.started = false;
       this.gameOver.style.display = 'block';
       this.playGame.style.display = 'none';
-    }
-  }
+  }}
    
   loop() {
     this.runLogic();
-    this.paint();
+    this.paint(); 
     if (this.started) {
       window.requestAnimationFrame(() => {
         this.loop();
@@ -204,6 +202,15 @@ class Game {
       }
     });
   }
+  
+  win(){
+    if(this.score >=30){
+      this.started = false;
+      this.playGame.style.display = 'none';
+      this.winGame.style.display = 'none';
+      console.log("I win")
+    }
+  }
 
   resetCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -239,7 +246,7 @@ class Game {
     this.grabWater();
     this.removePeasants();
     this.removeWater();
- 
+    this.win();
     this.displayPage();
   }
 
