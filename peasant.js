@@ -1,9 +1,8 @@
 const beerImg = new Image();
-beerImg.src ="./images/beer.png"
-
+beerImg.src = './images/beer.png';
 
 class Peasant {
-   constructor (game, x, y) {
+  constructor(game, x, y) {
     this.game = game;
     this.x = x;
     this.y = y;
@@ -12,19 +11,17 @@ class Peasant {
     this.img = beerImg;
   }
 
-  runLogic () {
+  runLogic() {
     this.y++;
-   
   }
-  paint () {
-     const context = this.game.context;
-     context.save();
+  paint() {
+    const context = this.game.context;
+    context.save();
      context.drawImage(this.img, 
-      this.x - this.width / 2 + 100,
-      this.y - this.height / 2,
+      this.x,
+      this.y,
       this.width,
       this.height, );
       context.restore()
   }
-  
 }

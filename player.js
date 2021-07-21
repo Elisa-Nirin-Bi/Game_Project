@@ -8,68 +8,88 @@ class Player {
     this.game = game;
     this.x = x;
     this.y = y;
-    this.width = 150;
+    this.width = 50;
     this.height = 100;
     this.score = score;
     this.speedX = 0;
     this.speedY = 0;
-  
   }
 
-  
- runLogic() {
-    this.score = 100;
-     // Calculate boundaries
+  runLogic() {
+    // this.score = 100;
+
+    // Calculate boundaries
     const lowerBoundary =
-    this.game.canvas.height - this.height - this.game.groundHeight;
+      this.game.canvas.height - this.height - this.game.groundHeight;
     const leftBoundary = 0;
-    const rightBoundary = this.game.canvas.width - 50;
+    const rightBoundary = this.game.canvas.width - 50 +26;
     const topBoundary = 100;
-    
 
-    // Moving the player vertically
-    this.speedY += gravity;
-    this.y += this.speedY;
+    const newY = this.y + this.speedY;
+    const newX = this.x + this.speedX;
 
     // Ensure player doesn't go out of boundary
-    if (this.y > lowerBoundary) {
-      this.y = lowerBoundary;
-      this.speedY = 0;
-    }
-    
-    if (this.y < topBoundary) {
-      this.y = topBoundary;
-      this.speedY = 0;
-    }
-    
-    // Moving the player horizontally
-    this.x += this.speedX;
-    
-    // Ensure player doesn't go out of boundary
-    if (this.x < leftBoundary) {
-      this.x = leftBoundary;
-      this.speedX = 0;
+    let verticalCollision = false;
+    let horizontalCollision = false;
+
+    if (newY > lowerBoundary || newY < topBoundary) {
+      verticalCollision = true;
     }
 
-    if (this.x > rightBoundary) {
-      this.x = rightBoundary;
-      this.speedX = 0;
+    if (newX < leftBoundary || newX > rightBoundary) {
+      horizontalCollision = true;
     }
 
+    for (const obstacle of this.game.obstacles) {
+      const obstacleVerticalCollision = obstacle.checkCollision({
+        x: this.x,
+        y: newY,
+        width: this.width,
+        height: this.height
+      });
+      if (obstacleVerticalCollision) {
+        verticalCollision = true;
+      }
+      const obstacleHorizontalCollision = obstacle.checkCollision({
+        x: newX,
+        y: this.y,
+        width: this.width,
+        height: this.height
+      });
+      if (obstacleHorizontalCollision) {
+        horizontalCollision = true;
+      }
+    }
+
+    if (verticalCollision) {
+      this.speedY = 0;
+    } else {
+      this.y = newY;
+      this.speedY += gravity;
+     
+    }
+
+    if (horizontalCollision) {
+      this.speedX = 0;
+    } else {
+      this.x = newX;
+     
+    }
   }
 
   jump() {
     this.speedY -= 10;
     console.log(this.speedY);
   }
- 
+
   paint() {
     const context = this.game.context;
-    context.drawImage(
+ 
+     context.drawImage(
       playerImg,
       this.x,
       this.y,
-      50,
+      this.width,
       this.height
     );
   }

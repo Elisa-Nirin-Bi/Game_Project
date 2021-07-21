@@ -18,7 +18,6 @@ canvas{
   font-size: 20px;
 }
 
-
 #intro_page{
 display:flex;
 flex-direction: column;
@@ -47,7 +46,11 @@ h3{
   background-color: #FFA500;
 }
 
-#win_page { 
+#win_text > h3 { 
   color: #FFA500;
-  font-size:40px ;
+  font-size:50px ;
+}
+
+#win_page{
+  margin-top: 100px;
 }
