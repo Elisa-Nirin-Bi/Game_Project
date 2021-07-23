@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="game"  id="intro_page">
+    <img src="./images/arrow.png" alt="" class="arrows-img" width="100px" />
+   <section id="section_levelOne">
+    <button id="start_button">Play Level 1</button>
+    <div class="game" id="game_text">
+      <p>Help Bert the Tramp to have a drink, but be careful he can only have beer!</p>
+      <p> If he gets water he will lose 10 points. If he grabs a beer he will gain 10 points</p>
+     <p>Be careful to the puddles, when he is drunk he fells into them and sink!</p>
+     <p>If he reaches 150 points he wins!</p>
+    </div>
+  </section>
+</div>
+  <div class="game" id="canvas_page" style="display: none;"> <canvas id="canvas" width="800" height="450"></canvas></div>
+  <div class="game" id="game_over_page" style="display: none;">
+  <h3 >Game over!</h3>
+<button id="game_over_button">Play Again</button>
+ </div>
+ <div class="game" id="win_game" style="display: none;">
+    <div class="game" id="win_text"><h3>You won!</h3></div>
+    <button id="win_button">Play Again</button>
+   </div> 
+ 
+   <script src="./js/player.js"></script>
+  
+   <script src="./js/obstacle.js"></script>
+   <script src="./js/puddle.js"></script>
+   <script src="./js/water.js"></script>
+   <script src="./js/peasant.js"></script>
+   <script src="./js/background.js"></script>
+   <script src="./js/game.js"></script>
+   <script src="./js/script.js"></script>
+  
+  </body>
+</html>

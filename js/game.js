@@ -1,9 +1,9 @@
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
-    this.gameOver = document.getElementById('game_over_page');
     this.playGame = document.getElementById('canvas_page');
-    this.winGame = document.getElementById('win_page');
+    this.gameOver = document.getElementById('game_over_page');
+    this.winGame = document.getElementById('win_game');
     this.context = canvas.getContext('2d');
     this.background = new Background(this);
     this.puddle = new Puddle(this);
@@ -22,6 +22,8 @@ class Game {
   start() {
     this.started = true;
     this.score = 100;
+    this.beer = 0;
+    this.water = 0
     this.movePlayer();
     this.player = new Player(this, 50, 100);
     this.peasants = [];
@@ -45,27 +47,42 @@ class Game {
     }
   }
 
-  fontDefinition() {
+  scoreFontDefinition() {
     this.context.font = '22px sans-serif';
     this.context.fillStyle = '#FFA500';
     this.context.fillText(`${this.score}`, 670, 70);
   }
-
+  drinksFontDefinition() {
+    this.context.font = '15px sans-serif';
+    this.context.fillStyle = '#FFA500';
+    this.context.fillText(`BEERS: ${this.beer}` , 640,110);
+    this.context.fillText(`WATERS: ${this.water}`, 640,130);
+  }
   showScore() {
-    this.context.beginPath();
     this.context.beginPath();
     this.context.rect(630, 43, 100, 40);
     this.context.stroke();
     this.context.fillStyle = '#231709';
     this.context.fill();
-    this.fontDefinition();
+    this.scoreFontDefinition();
+  }
+  
+  showDrunkDrinks() {
+    this.context.beginPath();
+    this.context.rect(630, 93, 100, 40);
+    this.context.stroke();
+    this.context.fillStyle = '#231709';
+    this.context.fill();
+    this.drinksFontDefinition();
   }
 
   addObstacle() {
     const obstacle = new Obstacle(this, 150, 350);
-    const obstacleTwo = new Obstacle(this, 450, 350);
+    const obstacleTwo = new Obstacle(this, 380, 350);
+    const obstacleThree = new Obstacle(this, 600, 350);
     this.obstacles.push(obstacle);
     this.obstacles.push(obstacleTwo);
+    this.obstacles.push(obstacleThree);
   }
 
   addPeasant() {
@@ -82,8 +99,6 @@ class Game {
     if (this.peasants.length <= 2) {
       this.peasants.push(peasant);
     }
-    console.log(this.player.y)
-    console.log(this.player.x)
   }
 
   addWater() {
@@ -96,14 +111,14 @@ class Game {
   }
 
   stepOnPuddle() {
-    if (this.player.x > 280 && this.player.x < 310 && this.player.y > 298 || 
-      this.player.x > 580 && this.player.x < 610 && this.player.y  > 298)
+    if (this.player.x > 250 && this.player.x < 280 && this.player.y > 298 || 
+      this.player.x > 530 && this.player.x < 560 && this.player.y  > 298)
      {
+      const audioPuddle = new Audio("./sound/retro.wav");
+      audioPuddle.play();
       this.started = false;
       this.gameOver.style.display = 'block';
       this.playGame.style.display = 'none';
-      console.log("love")
-      console.log(this.player.width)
     }
   }
   grabPeasant() {
@@ -117,17 +132,12 @@ class Game {
       ) {
         const audioHitPeasant = new Audio("./sound/hihat-808.wav");
         audioHitPeasant.play();
-        console.log('PLAYER', this.player.x, this.player.y);
-        this.peasants.forEach((peasant) => {
-          console.log('PEASANT', peasant.x, peasant.y);
-        });
-       
         this.peasants.splice(index, 1);
         this.score += 10;
-        console.log('beer');
+        this.beer +=1
       }
-    });
-  }
+    
+  })}
 
   grabWater() {
     const player = this.player;
@@ -140,7 +150,7 @@ class Game {
       ) {
         this.waters.splice(index, 1);
         this.score -= 10;
-        console.log('water');
+        this.water +=1
       }
     });
   }
@@ -203,10 +213,12 @@ class Game {
 
   win(){
     if(this.score >=150){
+      const audioWin = new Audio("./sound/win.wav");
+      audioWin.play();
       this.started = false;
       this.playGame.style.display = 'none';
       this.winGame.style.display = 'block';
-      console.log("I win")
+     
     }
   }
 
@@ -217,7 +229,7 @@ class Game {
   runLogic() {
     this.player.runLogic();
 
-    if (Math.random() < 0.04) {
+    if (Math.random() < 0.03) {
       this.addPeasant();
     }
 
@@ -260,5 +272,6 @@ class Game {
     this.rainPeasant();
     this.rainWater();
     this.showScore();
+    this.showDrunkDrinks();
   }
 }

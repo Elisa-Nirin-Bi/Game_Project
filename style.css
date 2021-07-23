@@ -12,21 +12,35 @@ canvas{
   border: 5px solid #FFA500;
 }
 
+#intro_page1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+ 
+}
 #game_text{
   color: #FFA500;
   margin-top: 30px;
   font-size: 20px;
 }
 
-#intro_page{
-display:flex;
-flex-direction: column;
-align-items: center;
-margin-top: 50px;
+#game_text1{
+  color: #FFA500;
+  margin-top: 30px;
+  font-size: 20px;
 }
 
-#intro_page > button {
-  width: 100px;
+#intro_page{
+  margin-top: 30px;
+}
+
+#intro_page > button{
+  margin-top: 30px;
+}
+
+#intro_page1 > button {
+  width: 130px;
   height: 40px;
   border-radius: 5px;
   background-color: #FFA500;
@@ -34,12 +48,30 @@ margin-top: 50px;
   font-size: 15px;
 }
 
+#intro_page2 > button {
+  width: 130px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+  margin-top: 30px;
+  font-size: 15px;
+}
+
+
 h3{
   color: #FFA500;
   font-size:25px ;
 }
 
-#game_over_page > button{
+#game_over_button{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+}
+
+
+#game_over_page2 > button{
   width: 100px;
   height: 40px;
   border-radius: 5px;
@@ -53,4 +85,43 @@ h3{
 
 #win_page{
   margin-top: 100px;
+}
+
+#win_button{
+ 
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+}
+
+a{
+  font-size: 15px;
+  background-color: #FFA500;
+}
+
+
+#start_btn2{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+  margin-top: 30px;
+  
+}
+
+#game_over_page > button{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+}
+
+#start_button{
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #FFA500;
+  margin-top: 30px;
+  
 }
