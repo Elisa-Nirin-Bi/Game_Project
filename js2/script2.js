@@ -4,6 +4,7 @@ const canvasElement = document.querySelector('canvas');
 
 const game = new Game(canvasElement);
 const startGame2 = document.getElementById('intro_page2');
+
 const playGame = document.getElementById('canvas_page');
 const gameOverGame = document.getElementById('game_over_page2');
 const winGame = document.getElementById('win_page');
@@ -29,3 +30,4 @@ winBtn.addEventListener('click', () => {
   winGame.style.display = "none";
   game.start();
 });
+

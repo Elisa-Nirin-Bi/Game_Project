@@ -280,7 +280,7 @@ class Game {
     });
     this.stoneRights.forEach((stoneRight, index) => {
       if (stoneRight.x > this.canvas.width) {
-        this.stoneRight.splice(index, 1);
+        this.stoneRights.splice(index, 1);
       }
     });
   }
@@ -299,7 +299,7 @@ class Game {
     });
     this.stoneRights.forEach((stoneRight, index) => {
       if (stoneRight.x > this.canvas.width) {
-        this.stoneRight.splice(index, 1);
+        this.stoneRights.splice(index, 1);
       }
     });
   }
@@ -322,11 +322,11 @@ class Game {
   runLogic() {
     this.player.runLogic();
 
-    if (Math.random() < 0.03) {
+    if (Math.random() < 0.02) {
       this.addPeasant();
     }
 
-    if (Math.random() < 0.03) {
+    if (Math.random() < 0.02) {
       this.addWater();
     }
     for (const peasant of this.peasants) {
